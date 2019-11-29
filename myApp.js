@@ -127,7 +127,7 @@ const createManyPeople = (arrayOfPeople, done) => {
 // It supports an extremely wide range of search options. Check it in the docs.
 // Use the function argument `personName` as search key.
 
-var findPeopleByName = (personName, done) => {
+const findPeopleByName = (personName, done) => {
   Person.find({ name: personName }, (err, data) => {
     if (err) {
       done(err);
@@ -146,7 +146,7 @@ var findPeopleByName = (personName, done) => {
 // using `Model.findOne() -> Person`. Use the function
 // argument `food` as search key
 
-var findOneByFood = (food, done) => {
+const findOneByFood = (food, done) => {
   Person.findOne({ favoriteFoods: food }, (err, data) => {
     if (err) {
       done(err);
@@ -166,7 +166,7 @@ var findOneByFood = (food, done) => {
 // using `Model.findById() -> Person`.
 // Use the function argument 'personId' as search key.
 
-var findPersonById = function(personId, done) {
+const findPersonById = function(personId, done) {
   Person.findById(personId, (err, data) => {
     if (err) {
       done(err);
@@ -202,14 +202,14 @@ var findPersonById = function(personId, done) {
 // manually mark it as edited using `document.markModified('edited-field')`
 // (http://mongoosejs.com/docs/schematypes.html - #Mixed )
 
-var findEditThenSave = function(personId, done) {
-  var foodToAdd = "hamburger";
-  Person.findById(personId, (err, data) => {
-     data.favoriteFoods.push(foodToAdd).save();
+const findEditThenSave = function(personId, done) {
+  const foodToAdd = "hamburger";
+  Person.findById(personId, function(err, data) {
     if (err) {
       done(err);
     } else {
-      done(null, data);
+      data.favoriteFoods.push(foodToAdd);
+      data.save((err, data) => (err ? done(err) : done(null, data)));
     }
   });
 };
@@ -229,7 +229,7 @@ var findEditThenSave = function(personId, done) {
 // to `findOneAndUpdate()`. By default the method
 // passes the unmodified object to its callback.
 
-var findAndUpdate = function(personName, done) {
+const findAndUpdate = function(personName, done) {
   var ageToSet = 20;
 
   done(null /*, data*/);
