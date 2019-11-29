@@ -231,13 +231,18 @@ const findEditThenSave = function(personId, done) {
 
 const findAndUpdate = function(personName, done) {
   var ageToSet = 20;
-   Person.findOneAndUpdate({name:personName}, {age:ageToSet}, { new: true }, (err, data)=> {
-    if (err) {
-      done(err);
-    } else {
-      data.save((err, data) => (err ? done(err) : done(null, data)));
+  Person.findOneAndUpdate(
+    { name: personName },
+    { age: ageToSet },
+    { new: true },
+    (err, data) => {
+      if (err) {
+        done(err);
+      } else {
+        data.save((err, data) => (err ? done(err) : done(null, data)));
+      }
     }
-  });
+  );
 };
 
 /** # CRU[D] part IV - DELETE #
@@ -250,9 +255,9 @@ const findAndUpdate = function(personName, done) {
 // previous update methods. They pass the removed document to the cb.
 // As usual, use the function argument `personId` as search key.
 
-const removeById = (personId, done)=> {
-  Person.findByIdAndRemove(personId, (err, data)=>{
-    err?done(err, data):done(null, data);
+const removeById = (personId, done) => {
+  Person.findByIdAndRemove(personId, (err, data) => {
+    err ? done(err, data) : done(null, data);
   });
 };
 
@@ -266,10 +271,15 @@ const removeById = (personId, done)=> {
 // containing the outcome of the operation, and the number of items affected.
 // Don't forget to pass it to the `done()` callback, since we use it in tests.
 
-var removeManyPeople = function(done) {
-  var nameToRemove = "Mary";
-
-  done(null /*, data*/);
+const removeManyPeople = done => {
+  const nameToRemove = "Mary";
+  Person.deleteMany({ name: nameToRemove }, (err, data) => {
+    if (err) {
+      done(err);
+    }
+    
+    done(null, data);
+  });
 };
 
 /** # C[R]UD part V -  More about Queries # 
@@ -290,10 +300,9 @@ var removeManyPeople = function(done) {
 // Chain `.find()`, `.sort()`, `.limit()`, `.select()`, and then `.exec()`,
 // passing the `done(err, data)` callback to it.
 
-var queryChain = function(done) {
-  var foodToSearch = "burrito";
-
-  done(null /*, data*/);
+const queryChain = function(done) {
+  const foodToSearch = "burrito";
+  const findQuery = Person.find({favoriteFoods:foodToSearch}).sort({name:1}).limit(2).select({ name: 1, age: 0 }).exec(());
 };
 
 /** **Well Done !!**
