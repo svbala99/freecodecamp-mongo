@@ -54,8 +54,7 @@ const personSchema = new Schema({
 // we can proceed after completing an asynchronous operation such as inserting,
 // searching, updating or deleting. It's following the Node convention and
 // should be called as `done(null, data)` on success, or `done(err)` on error.
-// **Warning** - When interacting with remote services, **errors may occur** !
-
+// **Warning** - When interacting with remote services, **errors may occur** ! 
 // - Example -
 // var someFunc = function(done) {
 //   ... do something (risky) ...
@@ -130,10 +129,15 @@ const createManyPeople = (arrayOfPeople, done) => {
 
 var findPeopleByName = (personName, done) => {
   Person.find({name:personName}, (err, data)=>{
-    
+    if(err){
+      done(err);
+    }
+    else{
+      console.log(data);
+      done(null, data); 
+    }
   });
 };
-
 /** 6) Use `Model.findOne()` */
 
 // `Model.findOne()` behaves like `.find()`, but it returns **only one**
