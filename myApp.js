@@ -204,7 +204,7 @@ const findPersonById = function(personId, done) {
 
 const findEditThenSave = function(personId, done) {
   const foodToAdd = "hamburger";
-  Person.findByIdAndUpdate(personId, function(err, data) {
+  Person.findOneAndUpdate({name:personName }, { age: 20 }, (err, data)=> {
     if (err) {
       done(err);
     } else {
