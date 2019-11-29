@@ -82,7 +82,7 @@ const personSchema = new Schema({
 //    ...do your stuff here...
 // });
 const Person = mongoose.model("Person", personSchema);
-const createAndSavePerson = (done)=> {
+const createAndSavePerson = done => {
   const bala = new Person({
     name: "Bala Murugan",
     age: 28,
@@ -107,10 +107,14 @@ const createAndSavePerson = (done)=> {
 // Create many people using `Model.create()`, using the function argument
 // 'arrayOfPeople'.
 
-const createManyPeople = (arrayOfPeople, done) =>{
- Person.create(arrayOfPeople, (err, data)=>{
-   
- });
+const createManyPeople = (arrayOfPeople, done) => {
+  Person.create(arrayOfPeople, (err, data) => {
+    if (err) {
+      done(err);
+    } else {
+      done(null, data);
+    }
+  });
 };
 
 /** # C[R]UD part II - READ #
@@ -124,8 +128,10 @@ const createManyPeople = (arrayOfPeople, done) =>{
 // It supports an extremely wide range of search options. Check it in the docs.
 // Use the function argument `personName` as search key.
 
-var findPeopleByName = (personName, done)=> {
-  done(null /*, data*/);
+var findPeopleByName = (personName, done) => {
+  Person.find({name:personName}, (err, data)=>{
+    
+  });
 };
 
 /** 6) Use `Model.findOne()` */
@@ -138,7 +144,7 @@ var findPeopleByName = (personName, done)=> {
 // argument `food` as search key
 
 var findOneByFood = function(food, done) {
-  done(null /*, data*/);
+  
 };
 
 /** 7) Use `Model.findById()` */
