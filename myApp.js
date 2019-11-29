@@ -47,7 +47,6 @@ const personSchema = new Schema({
   favoriteFoods: [String]
 });
 
-const Person = mongoose.model("Person", personSchema);
 // **Note**: Glitch is a real server, and in real servers interactions with
 // the db are placed in handler functions, to be called when some event happens
 // (e.g. someone hits an endpoint on your API). We'll follow the same approach
@@ -82,9 +81,20 @@ const Person = mongoose.model("Person", personSchema);
 // person.save(function(err, data) {
 //    ...do your stuff here...
 // });
+const Person = mongoose.model("Person", personSchema);
+const createAndSavePerson = (done)=> {
+  const bala = new Person({
+    name: "Bala Murugan",
+    age: 28,
+    favoriteFoods: ["Biriyani", "Fish gravy"]
+  });
 
-var createAndSavePerson = function(done) {
-  done(null /*, data*/);
+  bala.save((err, data) => {
+    if (err) {
+      return console.error(err);
+    }
+    done(null, data);
+  });
 };
 
 /** 4) Create many People with `Model.create()` */
@@ -96,8 +106,8 @@ var createAndSavePerson = function(done) {
 // Create many people using `Model.create()`, using the function argument
 // 'arrayOfPeople'.
 
-var createManyPeople = function(arrayOfPeople, done) {
-  done(null /*, data*/);
+const createManyPeople = (arrayOfPeople, done) =>{
+ 
 };
 
 /** # C[R]UD part II - READ #
@@ -111,7 +121,7 @@ var createManyPeople = function(arrayOfPeople, done) {
 // It supports an extremely wide range of search options. Check it in the docs.
 // Use the function argument `personName` as search key.
 
-var findPeopleByName = function(personName, done) {
+var findPeopleByName = (personName, done)=> {
   done(null /*, data*/);
 };
 
