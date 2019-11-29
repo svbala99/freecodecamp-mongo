@@ -167,7 +167,7 @@ var findOneByFood = (food, done) => {
 // Use the function argument 'personId' as search key.
 
 var findPersonById = function(personId, done) {
-    Person.findById(personId, (err, data) => {
+  Person.findById(personId, (err, data) => {
     if (err) {
       done(err);
     } else {
@@ -204,11 +204,11 @@ var findPersonById = function(personId, done) {
 
 var findEditThenSave = function(personId, done) {
   var foodToAdd = "hamburger";
-    Person.findById(personId, (err, data) => {
+  Person.findById(personId, (err, data) => {
+     data.favoriteFoods.push(foodToAdd).save();
     if (err) {
       done(err);
     } else {
-      console.log(data);
       done(null, data);
     }
   });
