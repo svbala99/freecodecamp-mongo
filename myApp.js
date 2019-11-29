@@ -204,7 +204,7 @@ const findPersonById = function(personId, done) {
 
 const findEditThenSave = function(personId, done) {
   const foodToAdd = "hamburger";
-  Person.findOneAndUpdate({name:personName }, { age: 20 }, (err, data)=> {
+  Person.findById(personId, function(err, data) {
     if (err) {
       done(err);
     } else {
@@ -231,8 +231,13 @@ const findEditThenSave = function(personId, done) {
 
 const findAndUpdate = function(personName, done) {
   var ageToSet = 20;
-
-  done(null /*, data*/);
+   Person.findOneAndUpdate({name:personName}, {age:ageToSet}, { new: true }, (err, data)=> {
+    if (err) {
+      done(err);
+    } else {
+      data.save((err, data) => (err ? done(err) : done(null, data)));
+    }
+  });
 };
 
 /** # CRU[D] part IV - DELETE #
@@ -245,8 +250,10 @@ const findAndUpdate = function(personName, done) {
 // previous update methods. They pass the removed document to the cb.
 // As usual, use the function argument `personId` as search key.
 
-var removeById = function(personId, done) {
-  done(null /*, data*/);
+const removeById = (personId, done)=> {
+  Person.findByIdAndRemove(personId, (err, data)=>{
+    err?done(err, data):done(null, data);
+  });
 };
 
 /** 11) Delete many People */
