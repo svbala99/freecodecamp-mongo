@@ -41,7 +41,12 @@ mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true});
 
 // <Your code here >
 
-var Person /* = <Your Model> */
+const Schema = mongoose.Schema;
+var Person = new Schema({
+    name:  {type: String, required: true },
+    age: Number,
+    favoriteFoods: [String]
+  });
 
 // **Note**: Glitch is a real server, and in real servers interactions with
 // the db are placed in handler functions, to be called when some event happens
@@ -51,7 +56,7 @@ var Person /* = <Your Model> */
 // searching, updating or deleting. It's following the Node convention and
 // should be called as `done(null, data)` on success, or `done(err)` on error.
 // **Warning** - When interacting with remote services, **errors may occur** !
-
+ 
 // - Example -
 // var someFunc = function(done) {
 //   ... do something (risky) ...
