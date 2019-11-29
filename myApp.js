@@ -91,7 +91,8 @@ const createAndSavePerson = (done)=> {
 
   bala.save((err, data) => {
     if (err) {
-      return console.error(err);
+      done(err);
+      return;
     }
     done(null, data);
   });
@@ -107,7 +108,9 @@ const createAndSavePerson = (done)=> {
 // 'arrayOfPeople'.
 
 const createManyPeople = (arrayOfPeople, done) =>{
- 
+ Person.create(arrayOfPeople, (err, data)=>{
+   
+ });
 };
 
 /** # C[R]UD part II - READ #
